@@ -11,7 +11,7 @@ var moveRight = false;
 var moveUp=false;
 var moveDown=false;
 var x = 15
-var y = canvas.height / 2
+var y = 250
 var x2=x2
 var y2 = canvas.height - 30;
 var ballRadius = 10
@@ -19,10 +19,7 @@ var ballRadius = 10
 
 
 
-ctx.fillStyle = "black";
-canvas.width = 1300;
-canvas.height = 700;
-ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 
 
 
@@ -83,7 +80,7 @@ function spaceBarHandler(e) {
 function drawShip() {
 
     ctx.beginPath();
-    ctx.drawImage(spaceShip, x, y, 50, 50);
+    ctx.drawImage(spaceShip, x, y, 70, 70);
     ctx.closePath();
 }
 
@@ -91,8 +88,10 @@ function drawShip() {
 
 
 function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    ctx.fillStyle = "black";
+    canvas.width = 1100;
+    canvas.height = 600;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
   
     drawShip();
    
@@ -104,6 +103,13 @@ function draw() {
     } else if (leftPressed && x > 0 + ballRadius || leftPressed && x > ballRadius) {
         x -= 3;
     }
+    else if (downPressed && x < canvas.width - ballRadius || downPressed && x < ballRadius) {
+        y += 3;
+    } else if (upPressed && x > 0 + ballRadius || upPressed && x > ballRadius) {
+        y -= 3;
+    }
+
+
 
 
     //During firing
