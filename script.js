@@ -15,8 +15,14 @@ var y = 250
 var x2=x2
 var y2 = canvas.height - 30;
 var ballRadius = 10
+var e1=document.getElementById("e1")
+var a=1000 // enemy start
 
 
+
+function moveEnemy(){
+    a-=0.05
+}
 
 
 
@@ -85,6 +91,14 @@ function drawShip() {
 }
 
 
+function drawEnemy() { 
+    ctx.beginPath();
+  
+    setInterval(moveEnemy, 100)
+    ctx.drawImage(e1, a, 500, 70, 70);
+    ctx.closePath();
+}
+
 
 
 function draw() {
@@ -94,6 +108,7 @@ function draw() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   
     drawShip();
+    drawEnemy();
    
 
 
@@ -117,5 +132,5 @@ function draw() {
 
 } //end of draw
 
-
+setInterval(moveEnemy, 10)
 setInterval(draw, 10)
