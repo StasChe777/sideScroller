@@ -1,6 +1,6 @@
 var canvas = document.getElementById("gameCanvas");
 var ctx = canvas.getContext("2d");
-var spaceShip=document.getElementById("spaceShip");
+var spaceShip = document.getElementById("spaceShip");
 var rightPressed = false;
 var leftPressed = false;
 var spacePressed = false;
@@ -8,14 +8,17 @@ var upPressed = false;
 var downPressed = false;
 var moveLeft = false; 
 var moveRight = false;
-var moveUp=false;
-var moveDown=false;
+var moveUp = false;
+var moveDown = false;
 var x = 15
 var y = 250
-var x2=x2
+var x2 = x2
 var y2 = canvas.height - 30;
+
 var ballRadius = 10
 
+var bulletCount = 0
+var bulletActive = false;
 
 
 
@@ -31,7 +34,7 @@ var ballRadius = 10
 
 
 
-    ctx.drawImage(spaceShip, 0, 300, 100, 100);
+ctx.drawImage(spaceShip, 0, 300, 100, 100);
  
 
 
@@ -78,7 +81,6 @@ function spaceBarHandler(e) {
 
 
 function drawShip() {
-
     ctx.beginPath();
     ctx.drawImage(spaceShip, x, y, 70, 70);
     ctx.closePath();
@@ -86,13 +88,33 @@ function drawShip() {
 
 
 
+function drawBullet() {
+    if (bulletActive == false) {
+        ctx.beginPath();
+        ctx.rect(x2, y2 - 25, 15, 1);
+        ctx.fillStyle = "green"
+        ctx.strokeStyle = "green"
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath;
+        bulletCount++
+       
+        if (x2 < 0) {
+            spacePressed = false;
+            x2 = canvas.height - 700;
+            bulletCount = 0
+        }
+       
+    }
+}
+
 
 function draw() {
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "Black";
     canvas.width = 1100;
     canvas.height = 600;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
+   
     drawShip();
    
 
@@ -113,9 +135,22 @@ function draw() {
 
 
     //During firing
-   
+    if (spacePressed) {
+        if (bulletCount === 0 ) { //Take the first x position of the ship at fire
+        x2 = x + 38 ;
+        y2 = y + 40;
+     
+        }
+        x2 -= -15; //bullet will travel up the screen
+        
+        drawBullet();
+    }
 
+    
 } //end of draw
+
+
+
 
 
 setInterval(draw, 10)
