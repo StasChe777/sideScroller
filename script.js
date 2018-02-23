@@ -16,12 +16,13 @@ var x2=x2
 var y2 = canvas.height - 30;
 var ballRadius = 10
 var e1=document.getElementById("e1")
-var a=1000 // enemy start
+var a=1000 // enemy xstart
+var n=100 // enemy y start
 
 
 
 function moveEnemy(){
-    a-=0.05
+    a-=0.01
 }
 
 
@@ -88,17 +89,38 @@ function drawShip() {
     ctx.beginPath();
     ctx.drawImage(spaceShip, x, y, 70, 70);
     ctx.closePath();
+    
 }
 
 
-function drawEnemy() { 
-    ctx.beginPath();
+function draw1Enemy(ey) { //ey - enemy starting position
   
+    ctx.beginPath();
     setInterval(moveEnemy, 100)
-    ctx.drawImage(e1, a, 500, 70, 70);
-    ctx.closePath();
+    ctx.drawImage(e1, a, ey, 70, 70);
+    ctx.closePath()
 }
 
+function drawEnemyWave1(){
+    ey=-90
+    for (i=0; i<6; i++){
+    ey+=100
+        draw1Enemy(ey)
+    }
+}
+
+function drawEnemyWave2(){
+    ctx.beginPath();
+    setInterval(moveEnemy, 100)
+    ctx.drawImage(e1, a, ey, 70, 70);
+    ctx.closePath()
+
+}
+
+function drawEnemy(){
+    drawEnemyWave1();
+   setTimeout(drawEnemyWave2, 5000);
+}
 
 
 function draw() {
