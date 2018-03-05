@@ -1,6 +1,6 @@
 var canvas = document.getElementById("gameCanvas");
 var ctx = canvas.getContext("2d");
-var spaceShip=document.getElementById("spaceShip");
+var spaceShip = document.getElementById("spaceShip");
 var rightPressed = false;
 var leftPressed = false;
 var spacePressed = false;
@@ -40,20 +40,16 @@ function moveEnemy(){
 
 
 
-//var background = new Image();
-//background.src = "img/sky.png";
-
-
-
-
-
-    ctx.drawImage(spaceShip, 0, 300, 100, 100);
+ctx.drawImage(spaceShip, 0, 300, 100, 100);
  
 
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("keydown", spaceBarHandler, false);
+
+
+
 
 
 function keyDownHandler(e) {
@@ -88,13 +84,15 @@ function keyUpHandler(e) {
 function spaceBarHandler(e) {
     if (e.keyCode == 32) {
         spacePressed = true;
-        bulletActive = false;
-    }
+        bulletActive = true;
+    } 
 }
 
 
-function drawShip() {
 
+
+
+function drawShip() {
     ctx.beginPath();
     ctx.drawImage(spaceShip, x, y, 70, 70);
     ctx.closePath();
@@ -143,38 +141,62 @@ function drawEnemy(){
     setInterval(drawEnemyWave1, 9000);
 }
 
+    function drawBullet() {
+    if (bulletActive == true) {
+        ctx.beginPath();
+        ctx.rect(x2 + 10, y2 - 5, 30, 2);
+        ctx.fillStyle = "green"
+        ctx.strokeStyle = "green"
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath;
+        bulletCount++
+    }
+        if (x2 < 0) {
+           bulletActive = false;
+            spacePressed = false;
+            bulletCount = 0
+       }
+    }
 
 function draw() {
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "Black";
     canvas.width = 1100;
     canvas.height = 600;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
+   
     drawShip();
-    drawEnemy();
+
+    if (rightPressed && x < canvas.width - ballRadius || rightPressed && x < ballRadius) {
+        x += 4;
+    } else if (leftPressed && x > 0 + ballRadius || leftPressed && x > ballRadius) {
+        x -= 4;
+    }
+    else if (downPressed && x < canvas.width - ballRadius || downPressed && x < ballRadius) {
+        y += 4;
+    } else if (upPressed && x > 0 + ballRadius || upPressed && x > ballRadius) {
+        y -= 4;
+    }
+
+    //During firing
+
+    if (spaceBarHandler) {
+        if (bulletCount === 0) { //Take the first x position of the ship at fire
+        x2 = x + 38 ;
+        y2 = y + 40;
+        }
+
+        x2 -= -12; //bullet will travel up the screen
+        
+    drawBullet();
+
+    }
     
 
 
-    // stops ball moving too far
-    if (rightPressed && x < canvas.width - ballRadius || rightPressed && x < ballRadius) {
-        x += 3;
-    } else if (leftPressed && x > 0 + ballRadius || leftPressed && x > ballRadius) {
-        x -= 3;
-    }
-    else if (downPressed && x < canvas.width - ballRadius || downPressed && x < ballRadius) {
-        y += 3;
-    } else if (upPressed && x > 0 + ballRadius || upPressed && x > ballRadius) {
-        y -= 3;
-    }
+}
 
 
+  
 
-
-    //During firing
-   
-
-} //end of draw
-
-setInterval(moveEnemy, 10)
 setInterval(draw, 10)
-setInterval(drawEnemyWave2, 5000)
