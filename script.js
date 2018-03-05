@@ -10,15 +10,24 @@ var moveLeft = false;
 var moveRight = false;
 var moveUp=false;
 var moveDown=false;
-var x = 15
-var y = 250
-var x2=x2
+var x = 15;
+var y = 250;
+var x2=x2;
 var y2 = canvas.height - 30;
-var ballRadius = 10
+var ballRadius = 10;
 var e1=document.getElementById("e1")
+var e2=document.getElementById("e2")
+var e3=document.getElementById("e3")
+var e4=document.getElementById("e4")
+var e5=document.getElementById("e5")
+var e6=document.getElementById("e6")
+var e7=document.getElementById("e7")
+var e8=document.getElementById("e8")
+var e9=document.getElementById("e9")
+var e10=document.getElementById("e10")
 var a=1000 // enemy xstart
 var n=100 // enemy y start
-
+var en=e1
 
 
 function moveEnemy(){
@@ -93,33 +102,45 @@ function drawShip() {
 }
 
 
-function draw1Enemy(ey) { //ey - enemy starting position
-  
+function draw1Enemy(ey, en) { //ey - enemy starting position
+   
     ctx.beginPath();
-    setInterval(moveEnemy, 100)
-    ctx.drawImage(e1, a, ey, 70, 70);
-    ctx.closePath()
+    setInterval(moveEnemy, 100);
+    ctx.drawImage(en, a, ey, 70, 70);
+    ctx.closePath();
+ 
 }
 
 function drawEnemyWave1(){
     ey=-90
     for (i=0; i<6; i++){
     ey+=100
-        draw1Enemy(ey)
+        draw1Enemy(ey, en)
     }
 }
 
 function drawEnemyWave2(){
-    ctx.beginPath();
-    setInterval(moveEnemy, 100)
-    ctx.drawImage(e1, a, ey, 70, 70);
-    ctx.closePath()
+    var a=1000 // enemy xstart
+    var n=100
+    console.log(a)
+    ey=-90
+    let en=e2
+    for (i=0; i<6; i++){
+    ey+=100
+    console.log(en)
+        drawEnemyWave1(ey, en)
+    }
+    return a
+    return n
+}
 
+function w3(){
+    setInterval(drawEnemyWave2, 5000)
 }
 
 function drawEnemy(){
     drawEnemyWave1();
-   setTimeout(drawEnemyWave2, 5000);
+    setInterval(drawEnemyWave1, 9000);
 }
 
 
@@ -131,7 +152,7 @@ function draw() {
   
     drawShip();
     drawEnemy();
-   
+    
 
 
     // stops ball moving too far
@@ -156,3 +177,4 @@ function draw() {
 
 setInterval(moveEnemy, 10)
 setInterval(draw, 10)
+setInterval(drawEnemyWave2, 5000)
